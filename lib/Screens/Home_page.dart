@@ -36,7 +36,8 @@ class HomePage extends StatelessWidget {
             Text("Start Searching now 🔍", style: TextStyle(fontSize: 20)),
           ],
         ),
-      ):
+      )
+      :
       
        Container( 
 
