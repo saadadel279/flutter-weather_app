@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:weatherapp/Models/Weatheer_model.dart';
-import 'package:weatherapp/Providers/weather_provider.dart';
-
-import '../Services/Weather_Services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:weatherapp/cubits/weather_cubit/weather_cubit.dart';
 
 class SearchPage extends StatelessWidget {
   String? cityName;
@@ -21,16 +18,13 @@ class SearchPage extends StatelessWidget {
           child: TextField(
             onSubmitted: (data) async {
               cityName = data;
-              WeatherServices services = WeatherServices();
-             WeatherModel weather
-             = await services.getWeather(cityName: cityName!);
-                
-                Provider.of<WeatherProvider>(context,listen: false).weatherData=weather;
-                Provider.of<WeatherProvider>(context,listen: false).cityName=cityName;
-                Navigator.pop(context);
-        
+              BlocProvider.of<WeatherCubit>(context)
+                  .getWeather(cityName: cityName!);
+              BlocProvider.of<WeatherCubit>(context)
+                  .cityName=cityName;
+              Navigator.pop(context);    
             },
-            decoration:  const InputDecoration(
+            decoration: const InputDecoration(
               contentPadding:
                   EdgeInsets.symmetric(vertical: 32, horizontal: 24),
               hintText: "Enter City Name",
